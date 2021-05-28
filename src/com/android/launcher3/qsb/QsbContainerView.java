@@ -94,6 +94,9 @@ public class QsbContainerView extends FrameLayout {
 
         AppWidgetProviderInfo defaultWidgetForSearchPackage = null;
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        if (appWidgetManager == null) {
+            return null;
+        }
         for (AppWidgetProviderInfo info :
                 appWidgetManager.getInstalledProvidersForPackage(providerPkg, null)) {
             if (info.provider.getPackageName().equals(providerPkg) && info.configure == null) {

@@ -89,6 +89,10 @@ public class WidgetManagerHelper {
                     packageUser.mPackageName, packageUser.mUser);
         }
 
+        if (mAppWidgetManager == null) {
+            return Collections.emptyList();
+        }
+
         String pkg = packageUser.mPackageName;
         return Stream.concat(
                 // Only get providers for the given package/user.
@@ -149,6 +153,9 @@ public class WidgetManagerHelper {
 
     private static Stream<AppWidgetProviderInfo> allWidgetsSteam(Context context) {
         AppWidgetManager awm = context.getSystemService(AppWidgetManager.class);
+        if (awm == null) {
+            return CustomWidgetManager.INSTANCE.get(context).stream().map(o -> (AppWidgetProviderInfo)o);
+        }
         return Stream.concat(
                 UserCache.INSTANCE.get(context)
                         .getUserProfiles()
